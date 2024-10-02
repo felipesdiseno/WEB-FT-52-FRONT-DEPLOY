@@ -47,11 +47,9 @@ function LoginForm() {
         });
 
         if (!response.ok) {
-          const errorData = await response.json();
-          console.error('ERROR EN LA RESPUESTA DEL SERVIDOR:', errorData);
-          window.alert(
-            'ERROR EN LA RESPUESTA DEL SERVIDOR: ' + errorData.message,
-          );
+          const error = await response.json();
+          window.alert(error.message);
+
           route.push('/login');
           return;
         }
