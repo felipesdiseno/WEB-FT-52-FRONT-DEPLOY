@@ -14,7 +14,7 @@ export default function PaymentSuccess() {
 
   const pay = async (params: any, token: string | null) => {
     const response = await fetch(
-      `http://localhost:${port}/payments/pay-donations/success`,
+      `https://web-ft-52-back-1.onrender.com/payments/pay-donations/success`,
       {
         method: 'POST',
         headers: {

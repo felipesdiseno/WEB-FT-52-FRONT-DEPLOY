@@ -96,7 +96,7 @@ function InputEventAd() {
       console.log('!!!!!!!!!!!!!!!!', eventData);
       try {
         const response = await fetch(
-          `http://localhost:${port}/auth/events/create`,
+          `https://web-ft-52-back-1.onrender.com/auth/events/create`,
           {
             method: 'POST',
             headers: {

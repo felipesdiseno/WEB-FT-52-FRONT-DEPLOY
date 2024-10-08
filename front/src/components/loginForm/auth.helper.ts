@@ -16,13 +16,16 @@ const { setToken, setSession } = useAuth();
 
 export const postUserSessionData = async (userObject: IUserObject) => {
   try {
-    const response = await fetch('http://localhost:3003/users/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await fetch(
+      'https://web-ft-52-back-1.onrender.com/users/auth/login',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userObject),
       },
-      body: JSON.stringify(userObject),
-    });
+    );
 
     if (!response.ok) {
       throw new Error('Error en la respuesta del servidor');

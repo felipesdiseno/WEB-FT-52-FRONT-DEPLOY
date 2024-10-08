@@ -128,7 +128,7 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
     const getEvents = async () => {
       try {
         const res = await fetch(
-          `http://localhost:${port}/events/getactiveandinactivehighlight`,
+          `https://web-ft-52-back-1.onrender.com/vents/getactiveandinactivehighlight`,
         );
         if (res.ok) {
           const data = await res.json();

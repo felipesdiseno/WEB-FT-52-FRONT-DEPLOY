@@ -26,11 +26,12 @@ export default function EventsPage() {
   const [events, setEvents] = useState<AdminEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const {adminEvents, setEvent, setAdminEvent, userSession, token } = useAuth();
+  const { adminEvents, setEvent, setAdminEvent, userSession, token } =
+    useAuth();
 
   // const getEvents = async () => {
   //   try {
-  //     const response = await fetch('http://localhost:3003/events');
+  //     const response = await fetch('https://web-ft-52-back-1.onrender.com/events');
   //     if (response.status !== 200) {
   //       throw new Error('Error fetching events');
   //     }
@@ -44,16 +45,17 @@ export default function EventsPage() {
   // };
 
   useEffect(() => {
-    if (adminEvents){setEvents(adminEvents);}
-    
+    if (adminEvents) {
+      setEvents(adminEvents);
+    }
+
     // getEvents();
   }, [adminEvents]);
-
 
   const handleToggleHighlight = async (event: Item) => {
     try {
       const response = await fetch(
-        `http://localhost:3003/auth/events/highlight/${event.id}`,
+        `https://web-ft-52-back-1.onrender.com/auth/events/highlight/${event.id}`,
         {
           method: 'PATCH',
           headers: {
@@ -68,8 +70,8 @@ export default function EventsPage() {
       }
 
       const updatedEvent = await response.json();
-      setEvent(updatedEvent)
-      setAdminEvent(updatedEvent)
+      setEvent(updatedEvent);
+      setAdminEvent(updatedEvent);
     } catch (err) {
       setError('No se pudo actualizar el estado de destacar.');
     }
@@ -86,7 +88,7 @@ export default function EventsPage() {
     });
     try {
       const response = await fetch(
-        `http://localhost:3003/auth/events/edit/${updatedEvent.id}`,
+        `https://web-ft-52-back-1.onrender.com/auth/events/edit/${updatedEvent.id}`,
         {
           method: 'PATCH',
           headers: {
@@ -100,8 +102,8 @@ export default function EventsPage() {
         throw new Error('Error updating event');
       }
       const updatedEventData = await response.json();
-      setEvent(updatedEventData)
-      setAdminEvent(updatedEventData)
+      setEvent(updatedEventData);
+      setAdminEvent(updatedEventData);
     } catch (err) {
       setError('No se pudo actualizar el evento.');
     }
@@ -140,7 +142,7 @@ export default function EventsPage() {
                   eventAddress: event.eventAddress,
                   price: event.price,
                   stock: event.stock,
-                  status: event.status
+                  status: event.status,
                 }))}
                 onToggleAction={handleToggleAction}
                 onToggleHighlight={handleToggleHighlight}
