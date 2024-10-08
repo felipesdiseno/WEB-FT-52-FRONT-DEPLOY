@@ -14,7 +14,7 @@ export interface Item {
   status: string; // 'active' | 'partialactive' | 'pending' | 'banned' | 'inactive' | 'rejected';
   // user => 'active' | 'partialactive' | 'pending' | 'banned' | 'inactive'
   // donations => 'pending' | 'active' | 'rejected'
-  // events =>  'active' | 'inactive' 
+  // events =>  'active' | 'inactive'
   role?: string; // 'user' | 'admin' | 'superadmin'
   highlight: boolean; // true | false
   avatarUrl?: string;
@@ -45,7 +45,6 @@ interface AdminListComponentProps {
   onToggleHighlight: (item: Item) => void;
 }
 
-
 export default function AdminListComponent({
   type,
   items,
@@ -53,7 +52,7 @@ export default function AdminListComponent({
   onToggleAdminRole,
   getToggleLabel,
   getAdminToggleLabel,
-  onUpdateEvent,
+  // onUpdateEvent,
   onConfirmPayment,
   onCancelPayment,
   onToggleHighlight,
@@ -215,12 +214,12 @@ export default function AdminListComponent({
                   {selectedItem.status === 'banned' ? 'Activar' : 'Desactivar'}
                 </Button>
                 {type === 'event' && (
-                  <>
-                    <Button onClick={}>Editar</Button>
+                  <div>
+                    <Button>Editar</Button>
                     <Button onClick={handleToggleHighlight}>
                       {selectedItem.highlight ? 'No destacar' : 'Destacar'}
                     </Button>
-                  </>
+                  </div>
                 )}
               </div>
             </div>
