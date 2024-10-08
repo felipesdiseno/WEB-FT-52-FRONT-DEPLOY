@@ -20,7 +20,7 @@ interface ILoginError {
 }
 
 function LoginForm() {
-  // const port = process.env.NEXT_PUBLIC_APP_API_PORT;
+  const port = process.env.NEXT_PUBLIC_APP_API_PORT;
   const route = useRouter();
 
   const { setToken, setSession } = useAuth();
@@ -38,16 +38,13 @@ function LoginForm() {
       console.log('Formulario válido. Enviando datos...');
 
       try {
-        const response = await fetch(
-          `https://web-ft-52-back-1.onrender.com/auth/login`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(loginUser),
+        const response = await fetch(`http://localhost:${port}/users/auth/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
-        );
+          body: JSON.stringify(loginUser),
+        });
 
         if (!response.ok) {
           const errorData = await response.json();

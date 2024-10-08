@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -22,6 +22,7 @@ interface EventCardProps {
   title: string;
   eventDate: Date;
   eventLocation: string;
+  eventAddress: string;
   price: number;
   stock: number;
   images: string;
@@ -29,37 +30,83 @@ interface EventCardProps {
 
 const EventCard: React.FC<EventCardProps> = ({
   id,
-  // key,
+  key,
   highlight,
-  // createDate,
-  // status,
+  createDate,
+  status,
   title,
   eventDate,
   eventLocation,
-  // price,
-  // stock,
+  eventAddress,
+  price,
+  stock,
   images,
 }) => {
   const router = useRouter();
   const [highlighted, setHighlighted] = useState(highlight);
+  const [formattedAddress, setFormattedAddress] = useState('');
+  const [googleMapsLink, setGoogleMapsLink] = useState('');
+
+  const extractCoordinatesFromURL = (url: string) => {
+    try {
+      const queryString = new URL(url).searchParams.get('query');
+      return queryString
+        ? queryString.split(',').map((coord) => coord.trim())
+        : [];
+    } catch (error) {
+      console.error('Error al crear URL:', error);
+      return [];
+    }
+  };
+
+  const getAddressFromCoordinates = async (coordinates: string[]) => {
+    if (coordinates.length < 2) return 'Ubicación no disponible';
+
+    const [lat, lng] = coordinates.map(Number);
+
+    if (isNaN(lat) || isNaN(lng)) {
+      return 'Ubicación no válida';
+    }
+
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+    const response = await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`,
+    );
+    const data = await response.json();
+
+    if (data.results && data.results.length > 0) {
+      const address = data.results[0].formatted_address;
+      setGoogleMapsLink(
+        `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`,
+      ); // Formato del enlace
+      return address;
+    }
+    return `${lat}, ${lng}`;
+  };
+
+  useEffect(() => {
+    if (eventLocation) {
+      const coordinates = extractCoordinatesFromURL(eventLocation);
+      getAddressFromCoordinates(coordinates).then((address) => {
+        setFormattedAddress(address);
+      });
+    }
+  }, [eventLocation]);
 
   const handleHighlightToggle = async () => {
     setHighlighted(!highlighted);
 
     try {
-      const response = await fetch(
-        'https://web-ft-52-back-1.onrender.com/events/highlight',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            eventId: id,
-            highlight: !highlighted,
-          }),
+      const response = await fetch('http://localhost:3003/events/highlight', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
+        body: JSON.stringify({
+          eventId: id,
+          highlight: !highlighted,
+        }),
+      });
 
       if (!response.ok) {
         throw new Error('Error al actualizar el estado del evento');
@@ -80,7 +127,7 @@ const EventCard: React.FC<EventCardProps> = ({
     <Card className="flex-shrink-0 shadow-md">
       <CardHeader>
         <div className="flex justify-between items-center">
-          <CardTitle>{title}</CardTitle>
+          <CardTitle className="cursor-default">{title}</CardTitle>
         </div>
         <CardDescription className="cursor-default">
           <time>{new Date(eventDate).toLocaleDateString()}</time>
@@ -89,10 +136,22 @@ const EventCard: React.FC<EventCardProps> = ({
       <CardContent>
         <div className="justify-between items-center flex flex-col">
           <div>
-            <p className="flex items-center text-muted-foreground mb-4 cursor-default">
-              <MapPin className="mr-2 h-4 w-4" />
-              {eventLocation}
-            </p>
+            <p>Dirección: {eventAddress}</p>
+            {eventLocation ? (
+              <p className="flex items-center mb-4 cursor-pointer">
+                Ver ubicación en Google Maps
+                <a
+                  href={googleMapsLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 underline"
+                >
+                  <MapPin className="mr-2 h-4 w-4" />
+                </a>
+              </p>
+            ) : (
+              <p>Ubicación no disponible</p>
+            )}
           </div>
           <div
             className="ml-4 flex justify-center"
@@ -121,19 +180,7 @@ const EventCard: React.FC<EventCardProps> = ({
             </Button>
           </HoverCardTrigger>
         </HoverCard>
-        <Button variant={'outline'} onClick={handleHighlightToggle}>
-          {highlighted ? 'Quitar destacado' : 'Destacar evento'}
-        </Button>
       </CardFooter>
-      <div className="text-white">
-        <h1>quitar despues</h1>
-      </div>
-      <div className="text-white">
-        <h1>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius tempora
-          autem, quibusdam quos totam iusto?
-        </h1>
-      </div>
     </Card>
   );
 };

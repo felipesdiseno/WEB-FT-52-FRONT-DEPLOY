@@ -1,12 +1,9 @@
 export interface Event {
-  id: string;
-  highlight: boolean;
-  createDate: Date;
-  status: string;
+  id: number;
   title: string;
-  eventDate: Date;
-  eventLocation: string;
+  date: string;
+  description: string;
+  location: string;
   price: number;
   stock: number;
-  images: string[];
 }

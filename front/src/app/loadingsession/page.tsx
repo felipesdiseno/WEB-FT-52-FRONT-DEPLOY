@@ -13,23 +13,23 @@ interface IUserObject {
 }
 
 export default function LoadingSessions() {
-  // const port = process.env.NEXT_PUBLIC_APP_API_PORT;
+  const port = process.env.NEXT_PUBLIC_APP_API_PORT;
   const { setToken, setSession, userSession } = useAuth();
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  const [hasFetched, setHasFetched] = useState(false); // Estado para controlar la petición
+  const [hasFetched, setHasFetched] = useState(false); 
 
   useEffect(() => {
-    // Redirigir si el estado del usuario es 'pending'
+   
     if (userSession?.status === 'pending') {
       router.push('/formpage');
       return;
     }
 
-    if (status === 'loading') return; // Espera a que se cargue la sesión
+    if (status === 'loading') return; 
 
-    // Asegurarse de que no se haya hecho la petición previamente
+
     if (status === 'authenticated' && session.user && !hasFetched) {
       const userObject: IUserObject = {
         providerAccountId: session.user.providerAccountId || '',
@@ -39,7 +39,7 @@ export default function LoadingSessions() {
         image: session.user.image || '',
       };
       postUserSessionData(userObject);
-      setHasFetched(true); // Marca que la petición ya se hizo
+      setHasFetched(true); 
     } else if (status !== 'authenticated') {
       console.log('ERROR EN EL USE EFFECT DE CARGA DE SESION', session, status);
       alert('ERROR EN EL USE EFFECT DE CARGA DE SESION');
@@ -50,7 +50,7 @@ export default function LoadingSessions() {
   const postUserSessionData = async (userObject: IUserObject) => {
     try {
       const response = await fetch(
-        `https://web-ft-52-back-1.onrender.com/auth/auth0/signup`,
+        `http://localhost:${port}/users/auth0/signup`,
         {
           method: 'POST',
           headers: {

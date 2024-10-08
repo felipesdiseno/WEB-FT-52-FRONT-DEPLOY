@@ -1,5 +1,4 @@
 'use client';
-import { Event } from '@/interfaces/IEvent';
 import { ComboboxDemo } from '@/components/dropDownEvents/monthFilter';
 import { ComboboxDemoYear } from '@/components/dropDownEvents/yearFilter';
 import EventsList from '@/components/events/eventsList';
@@ -8,15 +7,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import EventAlert from '@/components/events/eventAlert';
 function EventsPage() {
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState([]);
   const [search, setSearch] = useState('');
-  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
 
   const getEvents = async (month = '', year = '', title = '') => {
     try {
-      let url = 'https://web-ft-52-back-1.onrender.com/events';
+      let url = 'http://localhost:3003/events';
 
       const params = new URLSearchParams();
       if (month) params.append('month', month);
@@ -45,7 +44,7 @@ function EventsPage() {
     getEvents(selectedMonth, selectedYear, search);
   }, [selectedMonth, selectedYear, search]);
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = (e) => {
     const value = e.target.value;
     setSearch(value);
     if (value.length > 1) {
@@ -100,7 +99,6 @@ function EventsPage() {
             </div>
           ) : (
             <EventsList
-              initialEvents={filteredEvents}
               selectedMonth={selectedMonth}
               selectedYear={selectedYear}
               search={search}

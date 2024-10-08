@@ -10,9 +10,9 @@ import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
 import { useSession } from 'next-auth/react';
 function SignupForm() {
-  // const port = process.env.NEXT_PUBLIC_APP_API_PORT;
+  const port = process.env.NEXT_PUBLIC_APP_API_PORT;
   const router = useRouter();
-  const { userSession, setSession, setToken } = useAuth();
+  const { userSession, setSession, setToken , token } = useAuth();
 
   const { data: session } = useSession();
 
@@ -65,11 +65,13 @@ function SignupForm() {
         };
         console.log('FORMDATA =================================>:', formData);
         const response = await fetch(
-          `https://web-ft-52-back-1.onrender.com/auth/auth0/completeregister`,
+          `http://localhost:${port}/users/auth0/completeregister`,
+          
           {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify(formData),
           },

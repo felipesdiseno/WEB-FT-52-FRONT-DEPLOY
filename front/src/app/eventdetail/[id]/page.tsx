@@ -12,6 +12,7 @@ interface Event {
   title: string;
   eventDate: Date;
   eventLocation: string;
+  eventAddress: string;
   description: string;
   price: number;
   stock: number;
@@ -19,7 +20,7 @@ interface Event {
 }
 
 const EventDetailPage = ({ params }: { params: { id: string } }) => {
-  const [event, setEvent] = useState<Event | null>(null);
+  const [event, setEvent] = useState<Event | null>();
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -27,13 +28,14 @@ const EventDetailPage = ({ params }: { params: { id: string } }) => {
         const fetchedEvent = await getEventById(params.id);
         setEvent(fetchedEvent);
       } catch (error) {
-        console.error('Error fetching event:', error);
+        window.console.error('error', error);
       }
     };
 
     fetchEvent();
   }, [params.id]);
 
+  
   console.log('id del evento', params.id);
 
   if (!event) {

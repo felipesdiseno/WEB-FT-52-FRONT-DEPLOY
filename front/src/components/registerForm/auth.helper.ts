@@ -1,24 +1,8 @@
-interface IUser {
-  id: number;
-  name: string;
-  email: string;
-}
-interface IRegisterUser {
-  name: string;
-  email: string;
-  password: string;
-}
-
-export async function register(
-  dataNewUser: IRegisterUser,
-  setToken: (token: string) => void,
-  setSession: (user: IUser) => void,
-  redirect: { push: (path: string) => void },
-) {
-  const APIURL = process.env.NEXT_PUBLIC_API_URL_POST_USER;
+export async function register(dataNewUser: IRegisterUser, setToken: (token: string) => void, setSession: (user: any) => void, redirect: any) {
+  const PORT = process.env.NEXT_PUBLIC_APP_API_PORT;
 
   try {
-    const response = await fetch(`${APIURL}`, {
+    const response = await fetch(`http://localhost:${PORT}/users/auth/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

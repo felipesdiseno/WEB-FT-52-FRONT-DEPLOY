@@ -2,7 +2,20 @@
 import React, { useEffect, useState } from 'react';
 import EventCard from '../eventCard';
 import { Button } from '@/components/ui/button';
-import { Event } from '@/interfaces/IEvent';
+
+export type Event = {
+  id: string;
+  highlight: boolean;
+  createDate: Date;
+  status: string;
+  title: string;
+  eventDate: Date;
+  eventLocation: string;
+  eventAddress: string;
+  price: number;
+  stock: number;
+  images: string[];
+};
 
 export type EventsListProps = {
   initialEvents: Event[];
@@ -24,10 +37,17 @@ const EventsList = ({
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    setEvents(initialEvents || []);
+  }, [initialEvents]);
+
   const fetchEvents = async (page: number) => {
+    if (showLimitedEvents) return;
+
+    const PORT = process.env.NEXT_PUBLIC_APP_API_PORT;
     setLoading(true);
     try {
-      let url = `https://web-ft-52-back-1.onrender.com/events?page=${page}&limit=6`;
+      let url = `http://localhost:3003/events?page=${page}&limit=6`;
 
       if (selectedMonth) url += `&month=${selectedMonth}`;
       if (selectedYear) url += `&year=${selectedYear}`;
@@ -46,8 +66,10 @@ const EventsList = ({
   };
 
   useEffect(() => {
-    fetchEvents(page);
-  }, [page, selectedMonth, selectedYear, search]);
+    if (!showLimitedEvents) {
+      fetchEvents(page);
+    }
+  }, [page, selectedMonth, selectedYear, search, showLimitedEvents]);
 
   const handleNextPage = () => {
     if (page < totalPages) {
@@ -60,15 +82,17 @@ const EventsList = ({
       setPage(page - 1);
     }
   };
+
   const filteredEvents = showLimitedEvents
     ? events
-        .filter((event) => new Date(event.eventDate) >= new Date()) // Solo eventos futuros
+        .filter((event) => new Date(event.eventDate) >= new Date())
         .sort(
           (a, b) =>
             new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime(),
-        ) // Ordenar por fecha más cercana
-        .slice(0, 3) // Mostrar solo 3 eventos
+        )
+        .slice(0, 3)
     : events;
+
   if (!Array.isArray(filteredEvents) || filteredEvents.length === 0) {
     return <div>No se encontraron eventos.</div>;
   }
@@ -86,10 +110,11 @@ const EventsList = ({
             title={event.title}
             eventDate={event.eventDate}
             eventLocation={event.eventLocation}
+            eventAddress={event.eventAddress}
             price={event.price}
             stock={event.stock}
             images={
-              event.images.length > 0
+              event.images && event.images.length > 0
                 ? event.images[0]
                 : '/path/to/placeholder-image.jpg'
             }
@@ -97,25 +122,27 @@ const EventsList = ({
         ))}
       </div>
 
-      <div className="flex justify-between items-center mt-4">
-        <Button
-          onClick={handlePrevPage}
-          disabled={page === 1}
-          variant={page === 1 ? 'disabled' : 'default'}
-        >
-          Página anterior
-        </Button>
-        <span className="text-lg font-medium text-gray-600 cursor-default">
-          Página {page} de {totalPages}
-        </span>
-        <Button
-          onClick={handleNextPage}
-          disabled={page === totalPages}
-          variant={page === totalPages ? 'disabled' : 'default'}
-        >
-          Siguiente página
-        </Button>
-      </div>
+      {!showLimitedEvents && !loading && (
+        <div className="flex justify-between items-center mt-4">
+          <Button
+            onClick={handlePrevPage}
+            disabled={page === 1}
+            variant={page === 1 ? 'disabled' : 'default'}
+          >
+            Página anterior
+          </Button>
+          <span className="text-lg font-medium text-gray-600 cursor-default">
+            Página {page} de {totalPages}
+          </span>
+          <Button
+            onClick={handleNextPage}
+            disabled={page === totalPages}
+            variant={page === totalPages ? 'disabled' : 'default'}
+          >
+            Siguiente página
+          </Button>
+        </div>
+      )}
 
       {loading && <p>Cargando eventos...</p>}
     </div>

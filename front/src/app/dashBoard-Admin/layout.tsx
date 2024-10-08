@@ -1,20 +1,46 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { signOut } from 'next-auth/react';
 import { useAuth } from '@/context/AuthContext';
+const port = process.env.NEXT_PUBLIC_APP_API_PORT;
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
   const toggleMenu = (menuName: string) => {
     setActiveMenu((prevMenu) => (prevMenu === menuName ? null : menuName));
   };
-  const { logout } = useAuth();
+  const { logout, adminEvents, setAdminEvents, allEvents, setAllEvents, token } = useAuth();
   const handleLogOut = () => {
     signOut({ callbackUrl: '/' });
     logout();
   };
+
+  const getEvents = async () => {
+    try {
+      const response = await fetch(`http://localhost:${port}/RUTA QUE LLAMA A TODOS LOS EVENTOS Y REQUIERE TOKEN`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      },
+      )
+    if(response.ok){
+      const data = await response.json();
+      setAdminEvents(data);
+    }else {setAllEvents(null)}
+    } catch (error) {
+      console.error('Error al obtener los eventos:', error);
+    }
+  }
+
+  useEffect(() => {
+    getEvents();
+  }, []);
 
   return (
     <div className="flex min-h-screen mb-20">
@@ -66,7 +92,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         href="/dashBoard-Admin/events/editEvent"
                         className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                       >
-                        Crear y editar Eventos
+                        Crear Eventos
                       </Link>
                     </li>
                     <li>
@@ -74,16 +100,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         href="/dashBoard-Admin/events/currentevents"
                         className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                       >
-                        Eventos vigentes
+                        Ver y Editar Eventos
                       </Link>
                     </li>
                     <li>
-                      <Link
+                      {/* <Link
                         href="/dashBoard-Admin/events/eventassistance"
                         className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                       >
                         Asistencia de eventos
-                      </Link>
+                      </Link> */}
                     </li>
                   </ul>
                 )}
@@ -131,7 +157,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </div>
             </li>
 
-            <li>
+            {/* <li>
               <div>
                 <button
                   onClick={() => toggleMenu('posteos')}
@@ -186,7 +212,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </ul>
                 )}
               </div>
-            </li>
+            </li> */}
 
             <li>
               <div>

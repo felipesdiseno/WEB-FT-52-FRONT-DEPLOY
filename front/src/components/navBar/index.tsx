@@ -11,16 +11,16 @@ function NavBar() {
   const [dropDownMenu, setDropDownMenu] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const { userSession } = useAuth();
+  const { userSession , token } = useAuth();
 
   const handleDropDownMenu = () => {
     setDropDownMenu(!dropDownMenu);
   };
 
   useEffect(() => {
-    console.log('navbar', userSession);
+    console.log('navbar', userSession ,"!!!!!!!" ,token);
   }),
-    [userSession];
+    [userSession , token];
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
   };
@@ -51,7 +51,7 @@ function NavBar() {
             href="/aboutUs"
             className="hover:cursor-pointer hover:bg-gray-200 font-bold text-blue-500 hover:text-blue-600 p-2 rounded-md transition duration-300 ease-in-out"
           >
-            Nuestra Comunidad
+            Nuestra comunidad
           </Link>
           <Link
             onClick={() => setDropDownMenu(false)}
@@ -110,7 +110,7 @@ function NavBar() {
             href="/aboutUs"
             className="block py-2 hover:bg-gray-200 text-blue-500 font-light rounded-md transition duration-300 ease-in-out"
           >
-            Nuestra Comunidad
+            Nuestra comunidad
           </Link>
           <Link
             href="/donations"
