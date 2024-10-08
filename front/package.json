@@ -52,7 +52,6 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@next/swc-win32-x64-msvc": "^14.2.15",
     "@types/jest": "^29.5.13",
     "@types/node": "^20",
     "@types/react": "^18.3.11",
