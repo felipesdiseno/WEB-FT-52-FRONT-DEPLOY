@@ -44,7 +44,7 @@ const EventCard: React.FC<EventCardProps> = ({
 }) => {
   const router = useRouter();
   const [highlighted, setHighlighted] = useState(highlight);
-  const [/*formattedAddress,*/ setFormattedAddress] = useState('');
+  // const [/*formattedAddress,*/ setFormattedAddress] = useState('');
   const [googleMapsLink, setGoogleMapsLink] = useState('');
 
   const extractCoordinatesFromURL = (url: string) => {
@@ -87,13 +87,13 @@ const EventCard: React.FC<EventCardProps> = ({
   useEffect(() => {
     if (eventLocation) {
       const coordinates = extractCoordinatesFromURL(eventLocation);
-      getAddressFromCoordinates(coordinates).then((address) => {
+      getAddressFromCoordinates(coordinates).then((/*address*/) => {
         // setFormattedAddress(address);
       });
     }
   }, [eventLocation]);
 
-  // const handleHighlightToggle = async () => {
+  /*const handleHighlightToggle = async () => {
     setHighlighted(!highlighted);
 
     try {
@@ -120,7 +120,7 @@ const EventCard: React.FC<EventCardProps> = ({
     } catch (error) {
       console.error('Error al enviar la solicitud:', error);
     }
-  };
+  };*/
 
   const handleViewDetails = () => {
     router.push(`/eventdetail/${id}`);
