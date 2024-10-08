@@ -1,4 +1,4 @@
-interface ILoginUser {
+/*interface ILoginUser {
     email: string;
     password: string;
     general?: string;
@@ -18,3 +18,4 @@ interface CustomSession {
     accessToken?: string;
     providerAccountId?: string;
   }
+    */

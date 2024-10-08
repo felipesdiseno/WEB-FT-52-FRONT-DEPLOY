@@ -30,21 +30,21 @@ interface EventCardProps {
 
 const EventCard: React.FC<EventCardProps> = ({
   id,
-  key,
+  /*key,*/
   highlight,
-  createDate,
-  status,
+  /*createDate,
+  status,*/
   title,
   eventDate,
   eventLocation,
   eventAddress,
-  price,
-  stock,
+  /*price,
+  stock,*/
   images,
 }) => {
   const router = useRouter();
   const [highlighted, setHighlighted] = useState(highlight);
-  const [formattedAddress, setFormattedAddress] = useState('');
+  const [/*formattedAddress,*/ setFormattedAddress] = useState('');
   const [googleMapsLink, setGoogleMapsLink] = useState('');
 
   const extractCoordinatesFromURL = (url: string) => {
@@ -88,12 +88,12 @@ const EventCard: React.FC<EventCardProps> = ({
     if (eventLocation) {
       const coordinates = extractCoordinatesFromURL(eventLocation);
       getAddressFromCoordinates(coordinates).then((address) => {
-        setFormattedAddress(address);
+        // setFormattedAddress(address);
       });
     }
   }, [eventLocation]);
 
-  const handleHighlightToggle = async () => {
+  // const handleHighlightToggle = async () => {
     setHighlighted(!highlighted);
 
     try {

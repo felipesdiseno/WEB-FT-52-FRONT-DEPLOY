@@ -10,14 +10,14 @@ import { useAuth } from '@/context/AuthContext';
 import IInputEventAdProps from '@/interfaces/IInputEventAdProps';
 import toast from 'react-hot-toast';
 import GoogleMap from '../GoogleMaps';
-import { set } from 'date-fns';
+// import { set } from 'date-fns';
 
 function InputEventAd() {
   const { setEvent, token, userSession } = useAuth();
   const [image, setImage] = useState<string>('');
   const [showMap, setShowMap] = useState<boolean>(false);
 
-  const port = process.env.NEXT_PUBLIC_APP_API_PORT;
+  // const port = process.env.NEXT_PUBLIC_APP_API_PORT;
 
   const formik = useFormik<IInputEventAdProps>({
     initialValues: {

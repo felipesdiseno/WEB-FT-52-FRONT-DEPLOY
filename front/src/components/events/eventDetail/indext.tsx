@@ -9,7 +9,7 @@ interface EventCardProps {
   status: string;
   title: string;
   eventDate: Date;
-  eventLocation: string; 
+  eventLocation: string;
   eventAddress: string;
   description: string;
   price: number;
@@ -18,21 +18,20 @@ interface EventCardProps {
 }
 
 const EventCardDetail: React.FC<EventCardProps> = ({
-  id,
+  /*id,
+  status,*/
   images = [],
   title,
-  status,
   eventDate,
-  eventLocation, 
+  eventLocation,
   eventAddress,
   stock,
   price,
   description,
 }) => {
   const [googleMapsLink, setGoogleMapsLink] = useState<string>('');
-  const [address, setAddress] = useState<string>(''); 
+  const [address, setAddress] = useState<string>('');
 
- 
   const extractCoordinatesFromURL = (url: string) => {
     try {
       const queryString = new URL(url).searchParams.get('query');
@@ -45,7 +44,6 @@ const EventCardDetail: React.FC<EventCardProps> = ({
     }
   };
 
- 
   const getAddressFromCoordinates = async (coordinates: string[]) => {
     if (coordinates.length < 2) return 'Ubicación no disponible';
 
@@ -71,7 +69,7 @@ const EventCardDetail: React.FC<EventCardProps> = ({
   };
 
   useEffect(() => {
-    const coordinates = extractCoordinatesFromURL(eventLocation); 
+    const coordinates = extractCoordinatesFromURL(eventLocation);
     const fetchAddress = async () => {
       const fetchedAddress = await getAddressFromCoordinates(coordinates);
       setAddress(fetchedAddress);
@@ -80,7 +78,7 @@ const EventCardDetail: React.FC<EventCardProps> = ({
     if (coordinates.length > 0) {
       fetchAddress();
     } else {
-      setAddress(eventAddress); 
+      setAddress(eventAddress);
     }
   }, [eventLocation, eventAddress]);
 
@@ -105,7 +103,9 @@ const EventCardDetail: React.FC<EventCardProps> = ({
             <p className="text-gray-700 font-semibold">{description}</p>
             <div className="space-y-2 mt-2">
               <div className="flex flex-row items-center gap-2 text-gray-700">
-                <p className="font-bold">Ubicación: {address || eventAddress}</p>
+                <p className="font-bold">
+                  Ubicación: {address || eventAddress}
+                </p>
                 {eventLocation && (
                   <a
                     href={googleMapsLink}

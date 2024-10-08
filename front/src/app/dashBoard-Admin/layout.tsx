@@ -14,9 +14,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   };
   const {
     logout,
-    adminEvents,
+    /*adminEvents,*/
     setAdminEvents,
-    allEvents,
+    /*allEvents,*/
     setAllEvents,
     token,
   } = useAuth();

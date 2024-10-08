@@ -16,7 +16,9 @@ import { useInView } from 'react-intersection-observer';
 import { useAnimation } from 'framer-motion';
 
 import FeaturedEventCard from '../components/events/featuredEventCard';
-import { CalendarIcon, MapPinIcon, ClockIcon, ImageIcon } from 'lucide-react';
+import {
+  CalendarIcon /*, MapPinIcon, ClockIcon, ImageIcon */,
+} from 'lucide-react';
 import HighlightEvent from '@/components/events/eventsHighLight';
 // import Image from 'next/image';
 // import { set } from 'date-fns';

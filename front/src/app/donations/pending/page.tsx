@@ -1,6 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { PaymentInfo, useAuth } from '@/context/AuthContext';
+import { /*PaymentInfo,*/ useAuth } from '@/context/AuthContext';
 import { CheckCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -12,7 +12,7 @@ export default function PaymentPending() {
   const { userSession, token, paymentInfo, setPaymentInfo, setDonation } =
     useAuth();
 
-  const pay = async (params: any, token: string | null) => {
+  const pay = async (params: unknown, token: string | null) => {
     const response = await fetch(
       `https://web-ft-52-back-1.onrender.com/:${port}/payments/pay-donations/pending`,
       {

@@ -44,7 +44,7 @@ const EventsList = ({
   const fetchEvents = async (page: number) => {
     if (showLimitedEvents) return;
 
-    const PORT = process.env.NEXT_PUBLIC_APP_API_PORT;
+    // const PORT = process.env.NEXT_PUBLIC_APP_API_PORT;
     setLoading(true);
     try {
       let url = `https://web-ft-52-back-1.onrender.com/events?page=${page}&limit=6`;

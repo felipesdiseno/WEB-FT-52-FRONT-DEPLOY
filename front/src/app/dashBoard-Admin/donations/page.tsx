@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+// import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import AdminListComponent from '@/components/adminPanel/adminListComponent';
 import { useAuth } from '@/context/AuthContext';
@@ -13,7 +13,7 @@ interface Donation {
   status: 'pending' | 'accepted';
 }
 
-const port = process.env.NEXT_PUBLIC_APP_API_PORT;
+// const port = process.env.NEXT_PUBLIC_APP_API_PORT;
 
 export default function AdminDonaciones() {
   const [donations, setDonations] = useState<Donation[]>([]);

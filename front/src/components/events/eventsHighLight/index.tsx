@@ -29,7 +29,7 @@ import { Event } from '@/context/AuthContext';
 // }
 
 const HighlightEvent: React.FC<Event> = ({
-  id,
+  // id,
   title,
   eventDate,
   eventLocation,
@@ -38,7 +38,7 @@ const HighlightEvent: React.FC<Event> = ({
   images,
 }) => {
   const [googleMapsLink, setGoogleMapsLink] = useState<string>('');
-  const [address, setAddress] = useState<string>('');
+  const [/*address,*/ setAddress] = useState<string>('');
 
   const extractCoordinatesFromURL = (url: string) => {
     try {

@@ -7,26 +7,26 @@ import AdminListComponent, {
 import { useAuth } from '@/context/AuthContext';
 import { Event as AdminEvent } from '@/context/AuthContext';
 
-interface Event {
-  id: string;
-  highlight: boolean;
-  createDate: Date;
-  status: string;
-  title: string;
-  eventDate: Date;
-  eventLocation: string;
-  eventAddress: string;
-  price: string;
-  stock: string;
-  images: string[];
-  description: string;
-  isActive: boolean;
-}
+// interface Event {
+//   id: string;
+//   highlight: boolean;
+//   createDate: Date;
+//   status: string;
+//   title: string;
+//   eventDate: Date;
+//   eventLocation: string;
+//   eventAddress: string;
+//   price: string;
+//   stock: string;
+//   images: string[];
+//   description: string;
+//   isActive: boolean;
+// }
 export default function EventsPage() {
   const [events, setEvents] = useState<AdminEvent[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading /*setLoading*/] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { adminEvents, setEvent, setAdminEvent, userSession, token } =
+  const { adminEvents, setEvent, setAdminEvent, /*userSession,*/ token } =
     useAuth();
 
   // const getEvents = async () => {

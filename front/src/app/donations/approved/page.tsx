@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 export default function PaymentSuccess() {
   const redirect = useRouter();
-  const port = process.env.NEXT_PUBLIC_APP_API_PORT;
+  // const port = process.env.NEXT_PUBLIC_APP_API_PORT;
   const [disabled, setDisabled] = useState(true);
   const { userSession, token, paymentInfo, setPaymentInfo, setDonation } =
     useAuth();
