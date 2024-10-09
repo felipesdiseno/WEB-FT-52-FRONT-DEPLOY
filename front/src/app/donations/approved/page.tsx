@@ -4,7 +4,7 @@ import { useAuth } from '@/context/AuthContext';
 import { CheckCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-
+import { PaymentParams, PaymentResponse } from '@/interfaces/IPayInterface';
 export default function PaymentSuccess() {
   const redirect = useRouter();
   // const port = process.env.NEXT_PUBLIC_APP_API_PORT;
@@ -12,7 +12,10 @@ export default function PaymentSuccess() {
   const { userSession, token, paymentInfo, setPaymentInfo, setDonation } =
     useAuth();
 
-  const pay = async (params: any, token: string | null) => {
+  const pay = async (
+    params: PaymentParams,
+    token: string | null,
+  ): Promise<PaymentResponse> => {
     const response = await fetch(
       `https://web-ft-52-back-1.onrender.com/payments/pay-donations/success`,
       {

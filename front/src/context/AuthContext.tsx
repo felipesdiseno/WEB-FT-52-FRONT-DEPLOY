@@ -1,8 +1,8 @@
 'use client';
 
-import { set } from 'date-fns';
+// import { set } from 'date-fns';
 import React, { useState, useEffect, createContext, useContext } from 'react';
-const port = process.env.NEXT_PUBLIC_APP_API_PORT;
+// const port = process.env.NEXT_PUBLIC_APP_API_PORT;
 
 interface AuthContextProps {
   children: React.ReactNode;

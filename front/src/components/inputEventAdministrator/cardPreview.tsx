@@ -4,7 +4,7 @@ import PreviewCardProps from '@/interfaces/IPreviewCardProps';
 function CardPreview({
   title,
   eventDate,
-  eventLocation,
+  // eventLocation,
   eventAdress,
   description,
   image,

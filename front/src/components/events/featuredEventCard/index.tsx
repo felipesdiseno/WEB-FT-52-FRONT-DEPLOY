@@ -8,14 +8,14 @@ import {
 import Image from 'next/image';
 
 interface FeaturedEventProps {
-  id: string; 
+  id: string;
   images: string;
   description: string;
   title: string;
 }
 
 export default function FeaturedEventCard({
-  id,
+  // id,
   images,
   description,
   title,
@@ -23,8 +23,10 @@ export default function FeaturedEventCard({
   return (
     <Card className="w-full max-w-[400px] shadow-lg">
       <CardContent className="pt-6 space-y-3">
-        <CardTitle className="cursor-default truncate" title={title}>{title}</CardTitle>
-        <div className="relative w-full aspect-video"> 
+        <CardTitle className="cursor-default truncate" title={title}>
+          {title}
+        </CardTitle>
+        <div className="relative w-full aspect-video">
           <Image
             className="rounded-xl object-cover"
             src={images}

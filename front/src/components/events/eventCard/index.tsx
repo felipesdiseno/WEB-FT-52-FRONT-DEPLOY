@@ -31,7 +31,7 @@ interface EventCardProps {
 const EventCard: React.FC<EventCardProps> = ({
   id,
   /*key,*/
-  highlight,
+  // highlight,
   /*createDate,
   status,*/
   title,
@@ -43,7 +43,7 @@ const EventCard: React.FC<EventCardProps> = ({
   images,
 }) => {
   const router = useRouter();
-  const [highlighted, setHighlighted] = useState(highlight);
+  // const [highlighted, setHighlighted] = useState(highlight);
   // const [/*formattedAddress,*/ setFormattedAddress] = useState('');
   const [googleMapsLink, setGoogleMapsLink] = useState('');
 

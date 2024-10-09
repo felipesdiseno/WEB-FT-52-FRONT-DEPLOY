@@ -1,8 +1,8 @@
 export async function register(
   dataNewUser: IRegisterUser,
   setToken: (token: string) => void,
-  setSession: (user: any) => void,
-  redirect: any,
+  setSession: (user: unknown) => void,
+  redirect: unknown,
 ) {
   // const PORT = process.env.NEXT_PUBLIC_APP_API_PORT;
 
