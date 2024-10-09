@@ -19,11 +19,7 @@ function NearbyEvents({ events }: Props) {
           eventAddress={event.eventAddress}
           price={event.price}
           stock={event.stock}
-          images={
-            event.images && event.images.length > 0
-              ? event.images[0]
-              : '/path/to/placeholder-image.jpg'
-          }
+          images={event.images[0] || ''}
           status={event.status}
           highlight={event.highlight}
         />

@@ -48,8 +48,9 @@ export interface Event {
   eventAddress: string;
   price: number;
   stock: number;
-  images: string[];
+  images: string;
   isActive?: boolean;
+  event: [];
 }
 
 interface AuthContextType {

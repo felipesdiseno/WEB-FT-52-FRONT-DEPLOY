@@ -1,15 +1,16 @@
 export interface EventCardProps {
   id: string;
-  key: string;
   highlight: boolean;
   createDate: Date;
   status: string;
   title: string;
+  description: string;
   eventDate: Date;
   eventLocation: string;
   eventAddress: string;
-  price?: number;
+  price: number;
   stock: number;
   images: string;
-  event?: [];
+  isActive?: boolean;
+  event: [];
 }
