@@ -1,6 +1,8 @@
+// import { ServerResponse } from 'http';
+import { NextApiRequest } from 'next';
 import NextAuth, { NextAuthOptions, DefaultSession } from 'next-auth';
 import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google';
-
+import { NextApiResponse } from 'next';
 declare module 'next-auth' {
   interface Session {
     accessToken?: string; // Añadir accessToken a la sesión
@@ -54,11 +56,12 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
-const handler = NextAuth(authOptions);
-
-// export { handler as GET, handler as POST };
-
-export default handler;
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
+  return await NextAuth(req, res, authOptions);
+}
 
 /*
 import NextAuth from "next-auth";
