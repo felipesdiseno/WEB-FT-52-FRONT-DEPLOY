@@ -9,7 +9,7 @@ function EditEvent() {
   const [stock, setStock] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
-  const [/*images,*/ setImages] = useState<string | null>(null);
+  const [images, setImages] = useState<string | null>(null);
   const [eventAddress, setEventAddress] = useState('');
 
   return (
@@ -30,6 +30,7 @@ function EditEvent() {
           description={description}
           stock={stock}
           price={price}
+          images={images}
           setTitle={setTitle}
           setEventDate={setEventDate}
           setEventLocation={setEventLocation}

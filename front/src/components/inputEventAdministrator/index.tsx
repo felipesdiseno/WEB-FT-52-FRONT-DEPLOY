@@ -12,7 +12,7 @@ import toast from 'react-hot-toast';
 import GoogleMap from '../GoogleMaps';
 // import { set } from 'date-fns';
 
-function InputEventAd() {
+const InputEventAd: React.FC<IInputEventAdProps> = () => {
   const { setEvent, token, userSession } = useAuth();
   const [image, setImage] = useState<string>('');
   const [showMap, setShowMap] = useState<boolean>(false);
@@ -290,6 +290,6 @@ function InputEventAd() {
       </div>
     </div>
   );
-}
+};
 
 export default InputEventAd;
