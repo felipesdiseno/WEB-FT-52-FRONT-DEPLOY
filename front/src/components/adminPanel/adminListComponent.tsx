@@ -16,7 +16,7 @@ export interface Item {
   // donations => 'pending' | 'active' | 'rejected'
   // events =>  'active' | 'inactive'
   role?: string; // 'user' | 'admin' | 'superadmin'
-  highlight: boolean; // true | false
+  highlight?: boolean; // true | false
   avatarUrl?: string;
   image?: string;
   eventDate?: string;
@@ -26,7 +26,6 @@ export interface Item {
   stock?: number | string;
   amount?: number;
   email?: string;
-
   // ===== BORRAR =====
   isActive?: boolean;
   isAdmin: boolean;
@@ -43,7 +42,7 @@ interface AdminListComponentProps {
   onUpdateEvent?: (updatedEvent: Item) => void;
   onConfirmPayment?: (id: string) => void;
   onCancelPayment?: (id: string) => void;
-  onToggleHighlight: (item: Item) => void;
+  onToggleHighlight: (user: Item) => void;
 }
 
 export default function AdminListComponent({
@@ -117,7 +116,19 @@ export default function AdminListComponent({
       }
     }
   };
-
+  //!verificar funcionalidad de este codigo:
+  const handleUpdateEvent = async () => {
+    try {
+      // Aquí va la lógica para actualizar el evento
+      // Puedes llamar a una API o actualizar el estado local
+      console.log('Evento actualizado');
+    } catch (error) {
+      console.error('Error actualizando evento:', error);
+    }
+  };
+  const handleCancelEdit = () => {
+    setEditingEvent(null);
+  };
   return (
     <div className="flex max-h-[calc(200vh-200px)] overflow-hidden">
       <Card className="w-full max-w-5xl mx-auto flex">
@@ -299,7 +310,10 @@ export default function AdminListComponent({
                 placeholder="Link de ubicación en Google"
               />
               <div className="mt-4">
-                <GoogleMaps setEventLocation={handleLocationChange} />
+                <GoogleMaps
+                  setEventLocation={(location) => console.log(location)}
+                  setEventAddress={(address) => console.log(address)}
+                />
               </div>
               <div className="flex space-x-2 mt-4">
                 <Button onClick={handleUpdateEvent}>Guardar cambios</Button>

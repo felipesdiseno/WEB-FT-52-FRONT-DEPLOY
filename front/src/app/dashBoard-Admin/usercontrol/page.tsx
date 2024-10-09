@@ -203,11 +203,13 @@ export default function AdminPanel() {
                 avatarUrl: user.avatarUrl,
                 status: user.status,
                 isAdmin: user.isAdmin,
+                highlight: true,
               }))}
               onToggleAction={handleToggleAction}
               onToggleAdminRole={handleToggleAdminRole}
               getToggleLabel={getToggleLabel}
               getAdminToggleLabel={getAdminToggleLabel}
+              onToggleHighlight={() => {}}
             />
           </div>
         </div>
