@@ -12,24 +12,17 @@ import {
 } from '@/components/ui/card';
 import { CalendarIcon, MapPinIcon, ClockIcon, ImageIcon } from 'lucide-react';
 import Image from 'next/image';
-import { Event } from '@/context/AuthContext';
 
-// interface EventHighlight {
-//   id: string;
-//   highlight: boolean;
-//   status: string;
-//   title: string;
-//   eventDate: Date;
-//   eventLocation: string;
-//   eventAddress: string;
-//   description: string;
-//   price: string;
-//   stock: string;
-//   images: string[];
-// }
+interface HighlightEventProps {
+  title: string;
+  eventDate: string;
+  eventLocation: string;
+  eventAddress: string;
+  description: string;
+  images: string[];
+}
 
-const HighlightEvent: React.FC<Event> = ({
-  // id,
+const HighlightEvent: React.FC<HighlightEventProps> = ({
   title,
   eventDate,
   eventLocation,
@@ -38,46 +31,46 @@ const HighlightEvent: React.FC<Event> = ({
   images,
 }) => {
   const [googleMapsLink, setGoogleMapsLink] = useState<string>('');
-  const [/*address,*/ setAddress] = useState<string>('');
+  const [address, setAddress] = useState<string>(eventAddress);
 
-  const extractCoordinatesFromURL = (url: string) => {
+  const extractCoordinatesFromURL = (url: string): string[] => {
     try {
-      const queryString = new URL(url).searchParams.get('query');
-      return queryString
-        ? queryString.split(',').map((coord) => coord.trim())
-        : [];
+      const query = new URL(url).searchParams.get('query');
+      return query ? query.split(',').map((coord) => coord.trim()) : [];
     } catch (error) {
-      console.error('Error al crear URL:', error);
+      console.error('Error extracting coordinates from URL:', error);
       return [];
     }
   };
 
-  const getAddressFromCoordinates = async (coordinates: string[]) => {
+  const getAddressFromCoordinates = async (
+    coordinates: string[],
+  ): Promise<string> => {
     if (coordinates.length < 2) return 'Ubicación no disponible';
 
     const [lat, lng] = coordinates.map(Number);
-
-    if (isNaN(lat) || isNaN(lng)) {
-      return 'Ubicación no válida';
-    }
+    if (isNaN(lat) || isNaN(lng)) return 'Ubicación no válida';
 
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-    const response = await fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`,
-    );
-    const data = await response.json();
-
-    if (data.results && data.results.length > 0) {
-      setGoogleMapsLink(
-        `https://www.google.com/maps/search/?api=1&query=${data.results[0].formatted_address}`,
+    try {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`,
       );
-      return data.results[0].formatted_address;
+      const data = await response.json();
+      if (data.results && data.results.length > 0) {
+        setGoogleMapsLink(
+          `https://www.google.com/maps/search/?api=1&query=${data.results[0].formatted_address}`,
+        );
+        return data.results[0].formatted_address;
+      }
+    } catch (error) {
+      console.error('Error fetching address from coordinates:', error);
     }
     return `${lat}, ${lng}`;
   };
 
   useEffect(() => {
-    const coordinates = extractCoordinatesFromURL(eventLocation || '');
+    const coordinates = extractCoordinatesFromURL(eventLocation);
     const fetchAddress = async () => {
       const fetchedAddress = await getAddressFromCoordinates(coordinates);
       setAddress(fetchedAddress);
@@ -91,7 +84,7 @@ const HighlightEvent: React.FC<Event> = ({
   }, [eventLocation, eventAddress]);
 
   return (
-    <Card className=" text-gray-800 shadow-xl max-w-4xl mx-auto overflow-hidden">
+    <Card className="text-gray-800 shadow-xl max-w-4xl mx-auto overflow-hidden">
       <div className="md:flex h-[400px]">
         <div className="md:w-1/2 h-full">
           <div className="relative w-full h-full">
@@ -112,8 +105,6 @@ const HighlightEvent: React.FC<Event> = ({
           </div>
         </div>
         <div className="md:w-1/2 flex flex-col h-full">
-          {' '}
-          {/* Full height for content */}
           <CardHeader className="flex-grow-0">
             <CardTitle className="text-2xl font-bold text-gray-900 line-clamp-2">
               {title}
@@ -133,8 +124,7 @@ const HighlightEvent: React.FC<Event> = ({
                 >
                   <MapPinIcon className="mr-2 text-blue-500 flex-shrink-0" />
                 </a>
-
-                <span className="line-clamp-1">{eventAddress}</span>
+                <span className="line-clamp-1">{address}</span>
               </div>
               <div className="flex items-center mt-2">
                 <ClockIcon className="mr-2 text-blue-500 flex-shrink-0" />

@@ -98,7 +98,10 @@ export default function Home() {
             {highlight && highlight.length > 0 ? (
               highlight.map((event) => (
                 <CarouselItem key={event.id}>
-                  <HighlightEvent {...event} />
+                  <HighlightEvent
+                    {...event}
+                    eventDate={event.eventDate.toISOString()}
+                  />
                 </CarouselItem>
               ))
             ) : (
