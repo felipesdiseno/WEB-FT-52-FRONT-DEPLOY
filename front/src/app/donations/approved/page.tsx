@@ -4,7 +4,12 @@ import { useAuth } from '@/context/AuthContext';
 import { CheckCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { PaymentParams, PaymentResponse } from '@/interfaces/IPayInterface';
+import {
+  PaymentParams,
+  PaymentResponse,
+  Donation,
+} from '@/interfaces/IPayInterface';
+
 export default function PaymentSuccess() {
   const redirect = useRouter();
   // const port = process.env.NEXT_PUBLIC_APP_API_PORT;
@@ -34,16 +39,21 @@ export default function PaymentSuccess() {
   useEffect(() => {
     if (!paymentInfo) return;
     const paymentData = {
-      creator: userSession?.creatorId,
-      title: paymentInfo?.title,
-      amount: paymentInfo?.amount,
+      creator: userSession?.creatorId ?? '',
+      title: paymentInfo?.title ?? '',
+      amount: paymentInfo?.amount ?? 0,
     };
 
     pay(paymentData, token)
       .then((data) => {
         if (data.ok) {
           const { donation } = data;
-          setDonation(donation);
+          if ('id' in donation && 'title' in donation && 'amount' in donation) {
+            // Verificar que tenga las propiedades esperadas
+            setDonation(donation as Donation);
+          } else {
+            console.error('Donación inválida');
+          }
           setPaymentInfo(null);
           setDisabled(false);
           window.alert('¡Gracias por tu donación!');
