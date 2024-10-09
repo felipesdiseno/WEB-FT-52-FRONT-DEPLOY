@@ -6,14 +6,15 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import EventAlert from '@/components/events/eventAlert';
+import { Event } from '@/components/events/eventsList';
 function EventsPage() {
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState<Event[]>([]);
   const [search, setSearch] = useState('');
-  const [filteredEvents, setFilteredEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
   const [selectedMonth, setSelectedMonth] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
 
-  const getEvents = async (month = '', year = '', title = '') => {
+  const getEvents = async (month = '', year = '', title: string = '') => {
     try {
       let url = 'https://web-ft-52-back-1.onrender.com/events';
 
@@ -44,13 +45,13 @@ function EventsPage() {
     getEvents(selectedMonth, selectedYear, search);
   }, [selectedMonth, selectedYear, search]);
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
     if (value.length > 1) {
       const filtered = events.filter((event) =>
         event.title.toLowerCase().includes(value.toLowerCase()),
-      );
+      ) as Event[];
       setFilteredEvents(filtered);
     } else {
       setFilteredEvents(events);
@@ -99,6 +100,7 @@ function EventsPage() {
             </div>
           ) : (
             <EventsList
+              initialEvents={filteredEvents}
               selectedMonth={selectedMonth}
               selectedYear={selectedYear}
               search={search}
