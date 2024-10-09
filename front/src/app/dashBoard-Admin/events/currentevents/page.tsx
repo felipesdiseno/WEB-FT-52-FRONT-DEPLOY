@@ -143,6 +143,7 @@ export default function EventsPage() {
                   price: event.price,
                   stock: event.stock,
                   status: event.status,
+                  isAdmin: false,
                 }))}
                 onToggleAction={handleToggleAction}
                 onToggleHighlight={handleToggleHighlight}
