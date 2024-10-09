@@ -9,7 +9,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { IoLogoGithub } from 'react-icons/io5';
 import Link from 'next/link';
-
+interface Developer {
+  name: string;
+  github: string;
+}
 const developers = [
   {
     name: 'Leandro Cardone',
@@ -124,7 +127,7 @@ export default function TeamPage() {
   );
 }
 
-function DeveloperCard({ name, github }) {
+function DeveloperCard({ name, github }: Developer) {
   return (
     <div className="flex items-center space-x-4 p-2 rounded-lg hover:bg-secondary transition-colors">
       <Avatar>
