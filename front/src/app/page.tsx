@@ -72,7 +72,7 @@ export default function Home() {
       .slice(0, 3);
     setIncommingEvents(incommingEvents);
   }, [token, userSession, allEvents, redirect]);
-  const [incommingEvents, setIncommingEvents] = useState([]);
+  const [incommingEvents, setIncommingEvents] = useState<Event[]>([]);
   useEffect(() => {
     if (inView) {
       controls.start({ opacity: 1, y: 0 });
