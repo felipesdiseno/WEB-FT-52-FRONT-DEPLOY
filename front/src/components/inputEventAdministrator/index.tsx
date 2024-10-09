@@ -10,6 +10,7 @@ import { useAuth } from '@/context/AuthContext';
 import IInputEventAdProps from '@/interfaces/IInputEventAdProps';
 import toast from 'react-hot-toast';
 import GoogleMap from '../GoogleMaps';
+import IFormInitialValues from '@/interfaces/IForminitialValues';
 // import { set } from 'date-fns';
 
 const InputEventAd: React.FC<IInputEventAdProps> = () => {
@@ -19,7 +20,7 @@ const InputEventAd: React.FC<IInputEventAdProps> = () => {
 
   // const port = process.env.NEXT_PUBLIC_APP_API_PORT;
 
-  const formik = useFormik<IInputEventAdProps>({
+  const formik = useFormik<IFormInitialValues>({
     initialValues: {
       title: '',
       eventDate: '',
