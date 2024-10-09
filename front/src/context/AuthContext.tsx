@@ -49,6 +49,7 @@ export interface Event {
   price: number;
   stock: number;
   images: string[];
+  isActive?: boolean;
 }
 
 interface AuthContextType {

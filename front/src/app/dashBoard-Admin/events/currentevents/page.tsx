@@ -76,7 +76,7 @@ export default function EventsPage() {
       setError('No se pudo actualizar el estado de destacar.');
     }
   };
-
+  const handleToggleAction = () => {};
   const handleUpdateEvent = async (updatedEvent: Item) => {
     console.log('Esto es lo que envio', {
       title: updatedEvent.title,
@@ -140,14 +140,15 @@ export default function EventsPage() {
                     .toISOString()
                     .split('T')[0],
                   eventAddress: event.eventAddress,
-                  price: event.price,
-                  stock: event.stock,
+                  price: event.price.toString(),
+                  stock: event.stock.toString(),
                   status: event.status,
                   isAdmin: false,
                 }))}
                 onToggleAction={handleToggleAction}
                 onToggleHighlight={handleToggleHighlight}
                 onUpdateEvent={handleUpdateEvent}
+                getToggleLabel={() => 'Activar/Desactivar'}
               />
             )}
           </div>

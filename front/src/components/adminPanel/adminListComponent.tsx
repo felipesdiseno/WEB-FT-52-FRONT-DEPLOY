@@ -20,14 +20,15 @@ export interface Item {
   avatarUrl?: string;
   image?: string;
   eventDate?: string;
-  price?: string;
+  price?: number | string;
   eventLocation?: string;
   eventAddress?: string;
-  stock?: string;
+  stock?: number | string;
   amount?: number;
   email?: string;
+
   // ===== BORRAR =====
-  isActive: boolean;
+  isActive?: boolean;
   isAdmin: boolean;
   // ===== BORRAR =====
 }
