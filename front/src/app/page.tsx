@@ -71,7 +71,7 @@ export default function Home() {
       )
       .slice(0, 3);
     setIncommingEvents(incommingEvents);
-  }, [token, userSession, allEvents, redirect]);
+  }, [token, userSession, allEvents, redirect, events]);
   const [incommingEvents, setIncommingEvents] = useState<Event[]>([]);
   useEffect(() => {
     if (inView) {
@@ -100,7 +100,7 @@ export default function Home() {
                 <CarouselItem key={event.id}>
                   <HighlightEvent
                     {...event}
-                    eventDate={event.eventDate.toISOString()}
+                    eventDate={event.eventDate.toString()}
                   />
                 </CarouselItem>
               ))
@@ -118,7 +118,7 @@ export default function Home() {
           Próximos Eventos
         </h2>
         <div className="flex flex-row mx-auto p-2 justify-center">
-          <NearbyEvents setEvents={incommingEvents} />
+          <NearbyEvents events={incommingEvents} />
         </div>
         <div className="flex justify-center mt-6">
           <Link href="/eventsPage" passHref>

@@ -12,39 +12,21 @@ import {
 } from '@/components/ui/card';
 import { MapPin } from 'lucide-react';
 import { HoverCard, HoverCardTrigger } from '@/components/ui/hover-card';
-
-interface EventCardProps {
-  id: string;
-  key: string;
-  highlight: boolean;
-  createDate: Date;
-  status: string;
-  title: string;
-  eventDate: Date;
-  eventLocation: string;
-  eventAddress: string;
-  price: number;
-  stock: number;
-  images: string;
-}
+import { EventCardProps } from '@/interfaces/IEventCardProps';
 
 const EventCard: React.FC<EventCardProps> = ({
   id,
-  /*key,*/
-  // highlight,
-  /*createDate,
-  status,*/
   title,
   eventDate,
   eventLocation,
   eventAddress,
-  /*price,
-  stock,*/
   images,
+  // price,
+  // stock,
+  // status,
+  // highlight,
 }) => {
   const router = useRouter();
-  // const [highlighted, setHighlighted] = useState(highlight);
-  // const [/*formattedAddress,*/ setFormattedAddress] = useState('');
   const [googleMapsLink, setGoogleMapsLink] = useState('');
 
   const extractCoordinatesFromURL = (url: string) => {
@@ -78,7 +60,7 @@ const EventCard: React.FC<EventCardProps> = ({
       const address = data.results[0].formatted_address;
       setGoogleMapsLink(
         `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`,
-      ); // Formato del enlace
+      );
       return address;
     }
     return `${lat}, ${lng}`;
@@ -87,40 +69,11 @@ const EventCard: React.FC<EventCardProps> = ({
   useEffect(() => {
     if (eventLocation) {
       const coordinates = extractCoordinatesFromURL(eventLocation);
-      getAddressFromCoordinates(coordinates).then((/*address*/) => {
-        // setFormattedAddress(address);
+      getAddressFromCoordinates(coordinates).then((address) => {
+        console.log(address);
       });
     }
   }, [eventLocation]);
-
-  /*const handleHighlightToggle = async () => {
-    setHighlighted(!highlighted);
-
-    try {
-      const response = await fetch(
-        'https://web-ft-52-back-1.onrender.com/events/highlight',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            eventId: id,
-            highlight: !highlighted,
-          }),
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error('Error al actualizar el estado del evento');
-      }
-
-      const data = await response.json();
-      console.log('Evento actualizado:', data);
-    } catch (error) {
-      console.error('Error al enviar la solicitud:', error);
-    }
-  };*/
 
   const handleViewDetails = () => {
     router.push(`/eventdetail/${id}`);
