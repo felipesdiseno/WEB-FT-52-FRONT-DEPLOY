@@ -165,6 +165,7 @@ export default function AdminDonaciones() {
               getToggleLabel={() => ''}
               onConfirmPayment={handleConfirmPayment}
               onCancelPayment={handleCancelPayment}
+              onToggleHighlight={() => {}}
             />
           </div>
         </div>
